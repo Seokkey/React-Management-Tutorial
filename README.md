@@ -1,3 +1,12 @@
+## Management System
+본 프로젝트는 REACT 연습을 위해 만든 프로젝트입니다.
+
+## README.md 파일이란?
+깃 허브 소개글
+해당 프로젝트의 소개, 설치방법, 레퍼런스등의 문구
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
