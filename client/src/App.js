@@ -22,38 +22,32 @@ const styles = theme => ({
   table:{
     minWidth: 1080 //테이블을 1080px 이상 출력하면 화면 크기가 줄어들어도 전체의 1080px 만큼 무조건 테이블이 자리 잡아서 가로 스크롤이 생김
   }
-})
+});
 
-
-const customers = [
-  {
-  'id' : 1,
-  'image' : 'https://placeimg.com/64/64/1', //any 이미지를 랜덤으로 가져옴 64*64 사이즈로 설정
-  'name' : '홍길동',
-  'birthday' : '880822',
-  'gender' : '남자',
-  'job' : '대학생',
-  },
-  {
-    'id' : 2,
-    'image' : 'https://placeimg.com/64/64/2', //이미지를 랜덤으로 가져옴 64*64 사이즈로 설정
-    'name' : '김혜자',
-    'birthday' : '640822',
-    'gender' : '여자',
-    'job' : '회사원',
-  },
-  {
-    'id' : 3,
-    'image' : 'https://placeimg.com/64/64/3', //이미지를 랜덤으로 가져옴 64*64 사이즈로 설정
-    'name' : '최불암',
-    'birthday' : '660822',
-    'gender' : '남자',
-    'job' : '선생님',
-    },  
-]
 
 class App extends Component { //Component : 웹 문서에서 어떠한 내용을 보여주기 위한 기본적인 단위 Component는 계층적으로 구성되어 있기때문에 하나의 Component가 다른 Component안에 들어갈 수 있음
+
+  state = {
+    customers: ""
+  }
   
+  componentDidMount(){ //모든 컴포넌트가 마운트가 된 뒤 실행되는 함수. 일반적으로 API에 접근해서 데이터를 받아오는 작업은 여기서 한다.
+    this.callApi()
+      .then(res => this.setState({customers: res}))
+      .catch(err => console.log("componentDidMount 에러",err));
+      console.log("결과", this.state.customers);
+  }
+
+  callApi = async () => { //비동기적으로 API에 접근
+    const response = await fetch('/api/customers'); //
+    console.log('fetch 붙는지', response);
+
+    const body = await response.json(); ///api/customers 경로에서 데이터 를 가져와서 json형태로 반환
+    console.log('/api/customers 에서 데이터 가져 왔는지', body);
+
+    return body;
+  }
+
   render(){
     const { classes } = this.props;
     return (
@@ -72,11 +66,11 @@ class App extends Component { //Component : 웹 문서에서 어떠한 내용을
           </TableHead>
           <TableBody>
           {
-            customers.map(c => { //map() 배열의 각각 원소에 어떠한 값을 적용하고 싶을 때 map이 각 원소를 순회하면서 c에 담음. 파이썬 문법과 동일
-              console.log("map으로 c에 담은 데이터",c);
+            this.state.customers ? this.state.customers.map(c => { //map() 배열의 각각 원소에 어떠한 값을 적용하고 싶을 때 map이 각 원소를 순회하면서 c에 담음. 파이썬 문법과 동일
+              
               return(              
                 <Customer
-                  // key={c.id} //map을 사용함에 있어서 각 원소를 구분할 수 있는 고유의 key 값이 있어야함
+                  key={c.id} //map을 사용함에 있어서 각 원소를 구분할 수 있는 고유의 key 값이 있어야함
                   id={c.id}
                   image={c.image}
                   name={c.name}
@@ -87,7 +81,7 @@ class App extends Component { //Component : 웹 문서에서 어떠한 내용을
                 </Customer>
               )
               
-            })
+            }) : ""
           }
           </TableBody>
         </Table>

@@ -2,11 +2,11 @@ import React, { Component } from 'react'; //'react' 라이브러리에서 Compon
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 
-const STYLE = {
-    display: {
-        display: 'inline'
-    }
-};
+// const style = {
+//     display: {
+//         display: 'inline'
+//     }
+// };
 
 class Customer extends Component{
     render(){
