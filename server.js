@@ -1,19 +1,16 @@
 const { Client } = require("pg"); //postgres 와 접속하기 위해 필요한 모듈
-
+const fs = require('fs'); //파일을 읽기 위한 모듈
 const express = require("express"); //express 불러오기
 const bodyParser = require("body-parser"); //서버 모듈을 위한 기능 선언
 const app = express(); //서버 모듈을 위한 기능 선언
 const port = process.env.PORT || 5000; //서버 포트번호 5000번으로 설정
 
+const data = fs.readFileSync('./database.json'); //./database.json 파일을 읽어옴
+const conf = JSON.parse(data); //파일을 JSON 형식으로 파싱
+
 
 //접속 정보 user : 유저이름, host: 주소, database: 데이터베이스 이름, password: 비번, port: 포트번호
-const client = new Client({ 
-    user : 'postgres',
-    host : 'localhost',
-    database: 'management',
-    password: '1234',
-    port: 5432
-});
+const client = new Client(conf); //JSON 데이터로 클라이언트 객체 생성
 
 client.connect(); //서버 접속
 
