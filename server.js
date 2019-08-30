@@ -1,7 +1,22 @@
+const { Client } = require("pg"); //postgres 와 접속하기 위해 필요한 모듈
+
 const express = require("express"); //express 불러오기
 const bodyParser = require("body-parser"); //서버 모듈을 위한 기능 선언
 const app = express(); //서버 모듈을 위한 기능 선언
 const port = process.env.PORT || 5000; //서버 포트번호 5000번으로 설정
+
+
+//접속 정보 user : 유저이름, host: 주소, database: 데이터베이스 이름, password: 비번, port: 포트번호
+const client = new Client({ 
+    user : 'postgres',
+    host : 'localhost',
+    database: 'management',
+    password: '1234',
+    port: 5432
+});
+
+client.connect(); //서버 접속
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -16,32 +31,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //"image" : "https://placeimg.com/64/64/1", //any 이미지를 랜덤으로 가져옴 64*64 사이즈로 설정
 app.get("/api/customers", (req, res) => { 
     
-    res.send([
-        {
-            "id": 1,
-            "image": "https://placeimg.com/64/64/1",
-            "name": "홍길동",
-            "birthday": "880811",
-            "gender": "남자",
-            "job": "대학생"
-        },
-        {
-            "id": 2,
-            "image": "https://placeimg.com/64/64/2",
-            "name": "김혜자",
-            "birthday": "640822",
-            "gender": "여자",
-            "job": "회사원"
-        },
-        {
-            "id": 3,
-            "image": "https://placeimg.com/64/64/3",
-            "name": "최불암",
-            "birthday": "660822",
-            "gender": "남자",
-            "job": "선생님"
-        }
-    ]);
+    //쿼리 실행
+    client.query('SELECT * FROM CUSTOMER', (err, queryRes) => {
+        console.log(err, queryRes);
+        console.log("가져온거 첫번 째 아이디",queryRes.rows[0].id);
+        client.end();//접속 종료
+        res.send(queryRes.rows);
+    });
+    
 });
 
 //실제 앱을 동작시키기 위해서 5000번 포트로 동작 시키고
