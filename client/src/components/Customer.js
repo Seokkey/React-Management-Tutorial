@@ -20,7 +20,7 @@ class Customer extends Component{
                 <TableCell>{this.props.job}</TableCell>
 
             </TableRow>            
-        )
+        );
         
     }
 }

@@ -13,6 +13,7 @@ import TableCell from '@material-ui/core/TableCell'
 import Paper from '@material-ui/core/Paper'
 import { withStyles } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import CustomerAdd from './components/CustomerAdd'
 
 const styles = theme => ({
   root:{
@@ -72,45 +73,48 @@ class App extends Component { //Component : 웹 문서에서 어떠한 내용을
   render(){
     const { classes } = this.props;
     return (
-      <Paper className={classes.root}>
-        <Clock></Clock>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>번호</TableCell>
-              <TableCell>이미지</TableCell>
-              <TableCell>이름</TableCell>
-              <TableCell>생년월일</TableCell>
-              <TableCell>성별</TableCell>
-              <TableCell>직업</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-          {
-            this.state.customers ? this.state.customers.map(c => { //map() 배열의 각각 원소에 어떠한 값을 적용하고 싶을 때 map이 각 원소를 순회하면서 c에 담음. 파이썬 문법과 동일
-              
-              return(              
-                <Customer
-                  key={c.id} //map을 사용함에 있어서 각 원소를 구분할 수 있는 고유의 key 값이 있어야함
-                  id={c.id}
-                  image={c.image}
-                  name={c.name}
-                  birthday={c.birthday}
-                  gender={c.gender}
-                  job={c.job}
-                >                
-                </Customer>
-              )
-              
-            }) : 
-            <TableRow>
-              <TableCell colSpan="6" align="center">
-                <CircularProgress className={classes.progress} variant="determinate" value="{this.state.completed}"></CircularProgress>                
-              </TableCell>
-            </TableRow>
-          }
-          </TableBody>
-        </Table>
+      <div>
+        <Paper className={classes.root}>
+          <Clock></Clock>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>번호</TableCell>
+                <TableCell>이미지</TableCell>
+                <TableCell>이름</TableCell>
+                <TableCell>생년월일</TableCell>
+                <TableCell>성별</TableCell>
+                <TableCell>직업</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+            {
+              this.state.customers ? this.state.customers.map(c => { //map() 배열의 각각 원소에 어떠한 값을 적용하고 싶을 때 map이 각 원소를 순회하면서 c에 담음. 파이썬 문법과 동일
+                
+                return(              
+                  <Customer
+                    key={c.id} //map을 사용함에 있어서 각 원소를 구분할 수 있는 고유의 key 값이 있어야함
+                    id={c.id}
+                    image={c.image}
+                    name={c.name}
+                    birthday={c.birthday}
+                    gender={c.gender}
+                    job={c.job}
+                  >                
+                  </Customer>
+                );
+                
+              }) : 
+              <TableRow>
+                <TableCell colSpan="6" align="center">
+                  <CircularProgress className={classes.progress} variant="determinate" value="{this.state.completed}"></CircularProgress>                
+                </TableCell>
+              </TableRow>
+            }
+            </TableBody>
+          </Table>
+          </Paper>
+          <CustomerAdd></CustomerAdd>
 
 
 
@@ -163,8 +167,8 @@ class App extends Component { //Component : 웹 문서에서 어떠한 내용을
         
         <ClockControl></ClockControl>
         <ApiExample></ApiExample>
-        <EventHandling></EventHandling>
-      </Paper>
+        <EventHandling></EventHandling>      
+      </div>
     );
 
   }

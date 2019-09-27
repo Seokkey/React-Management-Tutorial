@@ -11,7 +11,7 @@ class Clock extends Component{
     tick(){
         this.setState({
           date: new Date()  //date state 값을 새로운 new Date() 값으로 변경
-        })
+        });
     }
 
     componentDidMount(){ //componentDidMount() : component가 초기화가 끝났을 때, 즉 mount가 끝났을 때 자동으로 불러와지는 함수
@@ -33,7 +33,7 @@ class Clock extends Component{
             <h3>
                 현재 시각은 [{this.state.date.toLocaleTimeString()}] 입니다.
             </h3>
-        )
+        );
     }
 }
 

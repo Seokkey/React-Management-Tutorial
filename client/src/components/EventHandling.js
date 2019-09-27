@@ -21,7 +21,7 @@ class EventHandling extends Component{
         console.log("이벤트 처리");
         this.setState(state => ({
             isToggleOn: !this.state.isToggleOn //isToggleOn 변수의 값이 true면 false로 false면 true로 바꿈
-        }))
+        }));
     }
  
     render(){

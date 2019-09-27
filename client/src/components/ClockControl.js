@@ -24,7 +24,7 @@ class ClockControl extends Component{
                 </h3>
                 <button onClick={this.goBack.bind(this)}>10초 뒤로 가기</button>
             </div>
-        )
+        );
     }
 }
 
